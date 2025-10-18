@@ -1,15 +1,28 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, View, Text, FlatList } from 'react-native';
+import { ActivityIndicator, View, Text, FlatList, TouchableOpacity } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import styles from './Styles';
 import axios from 'axios';
 
+// Importe o tipo das rotas do App.tsx
+import { RootStackParamList } from '../../App';
+
+// Defina o tipo da navegação
+type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
+
 export function Home() {
     const [musicas, setMusicas] = useState<any[]>();
+    const navigation = useNavigation<HomeScreenNavigationProp>();
+    
+    function navToCadastro(){
+        navigation.navigate('CadastrarMusica');
+    }
 
     useEffect(() => {
-        axios.
-            get("http://127.0.0.1:8000/api/musicas")
+        axios
+            .get("http://127.0.0.1:8000/api/musicas")
             .then((res) => setMusicas(res.data))
             .catch((err) => console.error("Erro ao carregar músicas:", err))
     }, [])
@@ -35,6 +48,9 @@ export function Home() {
                     </View>
                 )}
             />
+            <TouchableOpacity onPress={navToCadastro}>
+                <Text style={{color: 'white'}}>Cadastrar Música</Text>
+            </TouchableOpacity>
         </View>
     );
 }
