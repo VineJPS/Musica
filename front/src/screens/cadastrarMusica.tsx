@@ -1,114 +1,97 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import styles from './Styles';
+import styles from './StylecadastrarMusica';
 import axios from 'axios';
 
 export function CadastrarMusica() {
     const navigation = useNavigation<any>();
     const [loading, setLoading] = useState(false);
     
-    const [formData, setFormData] = useState({
-        name: '',
-        compositor: '',
-        duracao: '',
-        estilo: ''
+    const [form, setForm] = useState({
+        name: '', compositor: '', duracao: '', estilo: ''
     });
 
-    const handleChange = (field: string, value: string) => {
-        setFormData(prev => ({
-            ...prev,
-            [field]: value
-        }));
-    };
-
-    const handleSubmit = async () => {
-        if (!formData.name || !formData.compositor || !formData.duracao || !formData.estilo) {
-            Alert.alert('Erro', 'Por favor, preencha todos os campos');
+    const cadastrar = async () => {
+        if (!form.name || !form.compositor || !form.duracao || !form.estilo) {
+            Alert.alert('Erro', 'Preencha todos os campos');
             return;
         }
 
         setLoading(true);
         
         try {
-            await axios.post("http://127.0.0.1:8000/api/musicas", formData);
-            
-            Alert.alert('Sucesso', 'Música cadastrada com sucesso!');
-            
-            // Limpar formulário
-            setFormData({
-                name: '',
-                compositor: '',
-                duracao: '',
-                estilo: ''
-            });
-            
-            // Voltar para a lista
+            await axios.post("http://127.0.0.1:8000/api/musicas", form);
+            Alert.alert('Sucesso', 'Música cadastrada!');
+            setForm({ name: '', compositor: '', duracao: '', estilo: '' });
             navigation.navigate('Home');
-            
         } catch (error) {
-            console.error('Erro ao cadastrar música:', error);
-            Alert.alert('Erro', 'Não foi possível cadastrar a música');
+            Alert.alert('Erro', 'Falha ao cadastrar');
         } finally {
             setLoading(false);
         }
     };
 
     return (
-        <ScrollView >
-            <Text>🎵 Cadastrar Nova Música</Text>
+        <ScrollView style={styles.container}>
+            <Text style={styles.header}>🎵 Nova Música</Text>
             
-            <View>
-                <View>
-                    <Text>Nome da Música</Text>
+            <View style={styles.formContainer}>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.label}>Nome</Text>
                     <TextInput
-                        value={formData.name}
-                        onChangeText={(text) => handleChange('name', text)}
-                        placeholder="Digite o nome da música"
+                        style={styles.input}
+                        value={form.name}
+                        onChangeText={(text) => setForm({...form, name: text})}
+                        placeholder="Nome da música"
                     />
                 </View>
 
-                <View>
-                    <Text>Compositor</Text>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.label}>Compositor</Text>
                     <TextInput
-                        value={formData.compositor}
-                        onChangeText={(text) => handleChange('compositor', text)}
-                        placeholder="Digite o nome do compositor"
+                        style={styles.input}
+                        value={form.compositor}
+                        onChangeText={(text) => setForm({...form, compositor: text})}
+                        placeholder="Nome do compositor"
                     />
                 </View>
 
-                <View>
-                    <Text>Duração</Text>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.label}>Duração</Text>
                     <TextInput
-                        value={formData.duracao}
-                        onChangeText={(text) => handleChange('duracao', text)}
+                        style={styles.input}
+                        value={form.duracao}
+                        onChangeText={(text) => setForm({...form, duracao: text})}
                         placeholder="Ex: 3:45"
                     />
                 </View>
 
-                <View>
-                    <Text>Estilo Musical</Text>
+                <View style={styles.inputGroup}>
+                    <Text style={styles.label}>Estilo</Text>
                     <TextInput
-                        value={formData.estilo}
-                        onChangeText={(text) => handleChange('estilo', text)}
-                        placeholder="Ex: Rock, Pop, Sertanejo..."
+                        style={styles.input}
+                        value={form.estilo}
+                        onChangeText={(text) => setForm({...form, estilo: text})}
+                        placeholder="Rock, Pop, etc..."
                     />
                 </View>
 
-                <View>
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity 
+                        style={styles.cancelButton}
                         onPress={() => navigation.navigate('Home')}
-                        disabled={loading}
                     >
-                        <Text>Cancelar</Text>
+                        <Text style={styles.buttonText}>Voltar</Text>
                     </TouchableOpacity>
                     
                     <TouchableOpacity 
-                        onPress={handleSubmit}
+                        style={styles.submitButton}
+                        onPress={cadastrar}
                         disabled={loading}
                     >
-                        <Text>
-                            {loading ? 'Cadastrando...' : 'Salvar Música'}
+                        <Text style={styles.buttonText}>
+                            {loading ? 'Salvando...' : 'Salvar'}
                         </Text>
                     </TouchableOpacity>
                 </View>

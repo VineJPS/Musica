@@ -15,9 +15,35 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="CadastrarMusica" component={CadastrarMusica} />
+      <Stack.Navigator 
+        initialRouteName="Home"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#121212',
+          },
+          headerTintColor: '#ffffff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+          contentStyle: {
+            backgroundColor: '#121212',
+          },
+        }}
+      >
+        <Stack.Screen 
+          name="Home" 
+          component={Home}
+          options={{
+            title: 'Minhas Músicas',
+          }}
+        />
+        <Stack.Screen 
+          name="CadastrarMusica" 
+          component={CadastrarMusica}
+          options={{
+            title: 'Cadastrar Música',
+          }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

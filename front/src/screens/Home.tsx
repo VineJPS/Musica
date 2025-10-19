@@ -6,10 +6,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import styles from './Styles';
 import axios from 'axios';
 
-// Importe o tipo das rotas do App.tsx
 import { RootStackParamList } from '../../App';
 
-// Defina o tipo da navegação
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 export function Home() {
@@ -29,7 +27,7 @@ export function Home() {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>🎵 Lista de Músicas</Text>
+            <Text style={styles.title}>PlayList</Text>
             <FlatList
                 data={musicas}
                 keyExtractor={(item) => item.id.toString()}
@@ -48,8 +46,11 @@ export function Home() {
                     </View>
                 )}
             />
-            <TouchableOpacity onPress={navToCadastro}>
-                <Text style={{color: 'white'}}>Cadastrar Música</Text>
+              <TouchableOpacity 
+                style={styles.addButton} 
+                onPress={() => navigation.navigate('CadastrarMusica')}
+            >
+                <Text style={styles.addButtonText}>Adicionar Música</Text>
             </TouchableOpacity>
         </View>
     );
