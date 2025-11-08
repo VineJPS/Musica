@@ -21,7 +21,7 @@ export function CadastrarMusica() {
         setLoading(true);
         
         try {
-            await axios.post("http://127.0.0.1:8000/api/musicas", form);
+            await axios.post("https://unputrefied-dyspeptically-alverta.ngrok-free.dev/api/musicas", form);
             Alert.alert('Sucesso', 'Música cadastrada!');
             setForm({ name: '', compositor: '', duracao: '', estilo: '' });
             navigation.navigate('Home');

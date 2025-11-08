@@ -12,9 +12,10 @@ class MusicaController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        return Musica::all();
-    }
+{
+    $musicas = Musica::all();
+    return response()->json($musicas);
+}
 
     /**
      * Show the form for creating a new resource.
@@ -45,7 +46,8 @@ class MusicaController extends Controller
      */
     public function show(string $id)
     {
-        return Musica::findOrFail($id);
+        $musicas = Musica::all();
+    return response()->json($musicas);
     }
 
     /**

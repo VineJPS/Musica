@@ -19,11 +19,34 @@ export function Home() {
     }
 
     useEffect(() => {
-        axios
-            .get("http://127.0.0.1:8000/api/musicas")
-            .then((res) => setMusicas(res.data))
-            .catch((err) => console.error("Erro ao carregar músicas:", err))
-    }, [])
+    const carregarMusicas = async () => {
+        try {
+          
+            const response = await axios.get(
+                "https://unputrefied-dyspeptically-alverta.ngrok-free.dev/api/musicas",
+                {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true',
+                        'User-Agent': 'ReactNativeApp',
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json',
+                    }
+                }
+            );
+            
+            console.log('Resposta da API:', response.data);
+            setMusicas(response.data);
+            
+        } catch (error) {
+            console.error('Erro detalhado:', error);
+           ;
+        } finally {
+        
+        }
+    };
+    
+    carregarMusicas();
+}, []);
 
     return (
         <View style={styles.container}>
