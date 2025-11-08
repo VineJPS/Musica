@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "95585648-f12a-49d7-806e-e961ccd5cea0"
+      }
+    },
+    "android": {
+      "package": "com.vinejps.api"
+    },
+    "owner": "vinejps",
+    "slug": "muscia2"
+  }
+}

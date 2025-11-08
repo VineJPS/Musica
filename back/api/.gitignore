@@ -22,3 +22,10 @@
 Homestead.json
 Homestead.yaml
 Thumbs.db
+# Expo
+.expo/
+.expo-shared/
+node_modules/
+dist/
+*.tmp
+*.log
